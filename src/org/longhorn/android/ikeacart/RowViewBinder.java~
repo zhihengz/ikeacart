@@ -1,0 +1,14 @@
+package org.longhorn.android.ikeacart;
+
+import android.database.Cursor;
+import android.widget.View;
+import android.widget.SimpleCursorAdapter.ViewBinder;
+
+public class RowViewBinder implments ViewBinder {
+
+    @Override
+	public boolean setViewValue( View view, Cursor cursor, int col ) {
+
+    }
+				     
+}
