@@ -8,7 +8,7 @@ import android.widget.SimpleCursorAdapter.ViewBinder;
 public class RowViewBinder implements ViewBinder {
 
     @Override
-	public boolean setViewValue( View view, Cursor cursor, int col ) {
+    public boolean setViewValue( View view, Cursor cursor, int col ) {
 	
 	int colUnitPrice = cursor.getColumnIndex( ItemDao.KEY_UNITPRICE );
 	int colQuantity = cursor.getColumnIndex( ItemDao.KEY_QUANTITY );
