@@ -21,6 +21,40 @@
 	android:layout_height="wrap_content" 
 	android:layout_weight="1"/>
   </LinearLayout>
+  <LinearLayout 
+      android:orientation="horizontal"
+      android:layout_width="fill_parent"
+      android:layout_height="wrap_content">
+    
+    <TextView 
+	android:layout_width="wrap_content"
+	android:layout_height="wrap_content" 
+	android:text="@string/quantity" />
+    <EditText 
+	android:id="@+id/quantity" 
+	android:maxLength="10"
+	android:numeric="integer"
+	android:layout_width="wrap_content"
+	android:layout_height="wrap_content" 
+	android:layout_weight="1"/>
+  </LinearLayout>
+  <LinearLayout 
+      android:orientation="horizontal"
+      android:layout_width="fill_parent"
+      android:layout_height="wrap_content">
+    
+    <TextView 
+	android:layout_width="wrap_content"
+	android:layout_height="wrap_content" 
+	android:text="@string/unitprice" />
+    <EditText 
+	android:id="@+id/unitprice" 
+	android:maxLength="10"
+	android:numeric="decimal"
+	android:layout_width="wrap_content"
+	android:layout_height="wrap_content" 
+	android:layout_weight="1"/>
+  </LinearLayout>
 <!--
 	<TextView android:layout_width="wrap_content"
 		android:layout_height="wrap_content" 

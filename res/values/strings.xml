@@ -4,5 +4,7 @@
     <string name="no_items">No Items Yet</string>
     <string name="menu_insert">Add Item</string>
     <string name="name">Item Name</string>
+    <string name="quantity">Quantity</string>
+    <string name="unitprice">Unit Price</string>
     <string name="confirm">Confirm</string>
 </resources>

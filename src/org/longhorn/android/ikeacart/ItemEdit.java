@@ -10,7 +10,7 @@ import android.database.Cursor;
 
 public class ItemEdit extends Activity {
     
-    private EditText nameText;
+    private EditText nameText, quantityText, unitPriceText;
     private Long rowId;
     private ItemDao itemDao;
     private Item currItem;
@@ -34,6 +34,9 @@ public class ItemEdit extends Activity {
 
     private void initEditFields( ) {
 	nameText = (EditText) findViewById( R.id.name );
+	quantityText = (EditText) findViewById( R.id.quantity );
+	unitPriceText = (EditText) findViewById( R.id.unitprice );
+	
     }
     private void findRowId( Bundle savedInstanceState) {
 	
@@ -69,6 +72,8 @@ public class ItemEdit extends Activity {
 	Item item = getItemToPopulate( );
 	currItem = item;
 	nameText.setText( item.getName( ) );
+	quantityText.setText( "" + item.getQuantity( ) );
+	unitPriceText.setText( "" + item.getUnitPrice( ) );
     }
 
     
@@ -99,6 +104,8 @@ public class ItemEdit extends Activity {
     private void saveState() {
 	Item item = currItem;
 	item.setName( nameText.getText().toString() );
+	item.setQuantity( Integer.parseInt( quantityText.getText().toString() ) );
+	item.setUnitPrice(Float.parseFloat( unitPriceText.getText().toString() ) );
 	if ( rowId == null ) {
 	    Item savedItem = itemDao.createItem( item );
 	    if ( savedItem.getId() != null )
