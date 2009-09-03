@@ -6,5 +6,7 @@
     <string name="name">Item Name</string>
     <string name="quantity">Quantity</string>
     <string name="unitprice">Unit Price</string>
+    <string name="location">Location</string>
+    <string name="location_prompt">Choose a location</string>
     <string name="confirm">Confirm</string>
 </resources>

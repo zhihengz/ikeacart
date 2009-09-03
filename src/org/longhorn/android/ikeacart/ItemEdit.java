@@ -5,6 +5,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.Spinner;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.database.Cursor;
 
@@ -36,6 +38,14 @@ public class ItemEdit extends Activity {
 	nameText = (EditText) findViewById( R.id.name );
 	quantityText = (EditText) findViewById( R.id.quantity );
 	unitPriceText = (EditText) findViewById( R.id.unitprice );
+	Spinner locationSpinner = (Spinner ) findViewById( R.id.location );
+	ArrayAdapter adapter = 
+	    ArrayAdapter.createFromResource( this,
+					     R.array.locations,
+					     android.R.layout.simple_spinner_item );
+	adapter.setDropDownViewResource( android.R.layout.simple_spinner_dropdown_item);
+	locationSpinner.setAdapter( adapter );
+	
 	
     }
     private void findRowId( Bundle savedInstanceState) {
