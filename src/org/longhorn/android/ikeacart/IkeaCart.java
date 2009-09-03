@@ -11,10 +11,12 @@ import android.view.View;
 import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
 import android.widget.ListView;
+import android.widget.AdapterView.AdapterContextMenuInfo;
 
 public class IkeaCart extends ListActivity {
     
     public static final int INSERT_ID = Menu.FIRST;
+    public static final int DELETE_ID = Menu.FIRST + 1;
 
     private static final int
 	ACTIVITY_CREATE = 0,
@@ -55,6 +57,27 @@ public class IkeaCart extends ListActivity {
 
 	Intent intent = new Intent( this, ItemEdit.class );
 	startActivityForResult( intent, ACTIVITY_CREATE );
+    }
+
+    @Override
+    public void onCreateContextMenu(ContextMenu menu, View v,
+				    ContextMenuInfo menuInfo) {
+	menu.add( 0, DELETE_ID, 0, R.string.menu_delete);
+	super.onCreateContextMenu(menu, v, menuInfo);
+    }
+
+    @Override
+    public boolean onContextItemSelected(MenuItem item) {
+	switch( item.getItemId() ) {
+	case DELETE_ID:
+	    AdapterContextMenuInfo info =
+		(AdapterContextMenuInfo) item.getMenuInfo();
+	    itemDao.deleteItem( info.id );
+	    fillData();
+	    return true;
+	}
+	return super.onContextItemSelected(item);
+	
     }
 
     @Override

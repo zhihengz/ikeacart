@@ -9,4 +9,5 @@
     <string name="location">Location</string>
     <string name="location_prompt">Choose a location</string>
     <string name="confirm">Confirm</string>
+    <string name="menu_delete">Delete</string>
 </resources>
