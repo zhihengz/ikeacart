@@ -9,6 +9,9 @@ public class Item {
     private Long id;
     private double unitPrice;
     
+    public Item() {
+
+    }
     public Item( String name, String location,
 		 double unitPrice, int quantity, int priority ) {
 	this.name = name;
@@ -17,6 +20,8 @@ public class Item {
 	this.quantity = quantity;
 	this.priority = priority;
     }
+
+    
     public void setUnitPrice(double UnitPrice) {
     this.unitPrice = UnitPrice;
     }

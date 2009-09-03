@@ -129,7 +129,7 @@ public class ItemDao {
      * 
      * @return Cursor over all notes
      */
-    public Cursor getAllItems() {
+    public Cursor getCursorOfAllItems() {
 
         return sqlite.query( DATABASE_TABLE, 
 			     new String[] {KEY_ROWID, 
@@ -149,7 +149,7 @@ public class ItemDao {
      * @return Cursor positioned to matching item, if found
      * @throws SQLException if note could not be found/retrieved
      */
-    public Cursor getItem(long rowId) throws SQLException {
+    public Cursor getCursorOfItem(long rowId) throws SQLException {
 
         Cursor mCursor =
                 sqlite.query( true, 
@@ -170,6 +170,24 @@ public class ItemDao {
         return mCursor;
     }
 
+    /**
+     * Return an item at positioned cursor
+     */
+    public Item getItem( Cursor cursor ) {
+
+	Item item = new Item();
+	item.setId( cursor.getLong( getColIndex( cursor, KEY_ROWID ) ) );
+	item.setName( cursor.getString( getColIndex( cursor, KEY_NAME ) ) );
+	item.setLocation( cursor.getString( getColIndex( cursor, KEY_LOCATION ) ) );
+	item.setUnitPrice( cursor.getFloat( getColIndex( cursor, KEY_UNITPRICE ) ) );
+	item.setQuantity( cursor.getInt( getColIndex( cursor, KEY_QUANTITY ) ) );
+	item.setPriority( cursor.getInt( getColIndex( cursor, KEY_PRIORITY ) ) );
+	return item;
+    }
+    
+    private int getColIndex( Cursor cursor, String colName ) {
+	return cursor.getColumnIndexOrThrow( colName );
+    }
     /**
      * Update the item using the details provided. The item to be updated is
      * specified using the rowId, and it is altered to use the title and body
