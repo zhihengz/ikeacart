@@ -13,6 +13,7 @@ import android.database.Cursor;
 public class ItemEdit extends Activity {
     
     private EditText nameText, quantityText, unitPriceText;
+    private Spinner locationSpinner;
     private Long rowId;
     private ItemDao itemDao;
     private Item currItem;
@@ -38,15 +39,17 @@ public class ItemEdit extends Activity {
 	nameText = (EditText) findViewById( R.id.name );
 	quantityText = (EditText) findViewById( R.id.quantity );
 	unitPriceText = (EditText) findViewById( R.id.unitprice );
-	Spinner locationSpinner = (Spinner ) findViewById( R.id.location );
+	locationSpinner = (Spinner ) findViewById( R.id.location );
 	ArrayAdapter adapter = 
 	    ArrayAdapter.createFromResource( this,
 					     R.array.locations,
 					     android.R.layout.simple_spinner_item );
 	adapter.setDropDownViewResource( android.R.layout.simple_spinner_dropdown_item);
 	locationSpinner.setAdapter( adapter );
-	
-	
+    }
+
+    private String[] getAllLocations( ) {
+	return getResources().getStringArray( R.array.locations );
     }
     private void findRowId( Bundle savedInstanceState) {
 	
@@ -72,7 +75,6 @@ public class ItemEdit extends Activity {
 	    item = new Item( );
 	    item.setName( "item name" );
 	    item.setQuantity( 1 );
-	    item.setLocation( "unknown" );
 	    item.setPriority( 1 );
 	    item.setUnitPrice( 0.0 );
 	}
@@ -84,9 +86,28 @@ public class ItemEdit extends Activity {
 	nameText.setText( item.getName( ) );
 	quantityText.setText( "" + item.getQuantity( ) );
 	unitPriceText.setText( "" + item.getUnitPrice( ) );
+	if ( item.getLocation() == null ) {
+	    item.setLocation( getFirstChoiceOfLocation( ) );
+	} else {
+	    setSpinnerSelected( item.getLocation() );
+	}
     }
 
+    private String getFirstChoiceOfLocation( ) {
+	return getAllLocations()[0];
+    }
     
+    private void setSpinnerSelected( String location ) {
+	String[] allLocations = getAllLocations();
+	
+	for ( int i = 0; i < allLocations.length; i++ ) {
+	    if ( location.equals( allLocations[i] ) ) {
+		locationSpinner.setSelection( i );
+		return;
+	    }
+	}
+	locationSpinner.setSelection( 0 );
+    }
     private void setConfirmTrigger( ) {
 	Button confirm = (Button) findViewById( R.id.confirm );
 	confirm.setOnClickListener( new View.OnClickListener() {
@@ -116,6 +137,7 @@ public class ItemEdit extends Activity {
 	item.setName( nameText.getText().toString() );
 	item.setQuantity( Integer.parseInt( quantityText.getText().toString() ) );
 	item.setUnitPrice(Float.parseFloat( unitPriceText.getText().toString() ) );
+	item.setLocation( locationSpinner.getSelectedItem().toString() );
 	if ( rowId == null ) {
 	    Item savedItem = itemDao.createItem( item );
 	    if ( savedItem.getId() != null )
