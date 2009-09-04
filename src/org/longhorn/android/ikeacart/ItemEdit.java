@@ -30,7 +30,7 @@ public class ItemEdit extends Activity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-	setContentView( R.layout.item_edit );
+	setContentView( R.layout.item_edit_table );
 	initDao();
 	initEditFields();
 	findRowId( savedInstanceState );
