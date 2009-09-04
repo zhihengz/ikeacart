@@ -10,4 +10,5 @@
     <string name="location_prompt">Choose a location</string>
     <string name="confirm">Confirm</string>
     <string name="menu_delete">Delete</string>
+    <string name="priority">Priority</string>
 </resources>

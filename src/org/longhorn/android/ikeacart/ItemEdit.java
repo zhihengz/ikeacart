@@ -8,16 +8,24 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.RadioButton;
 import android.database.Cursor;
 
 public class ItemEdit extends Activity {
     
+    private static int[] RadioButtonIds = new int[] {
+	R.id.priority_1,
+	R.id.priority_2,
+	R.id.priority_3,
+	R.id.priority_4,
+	R.id.priority_5,
+    };
     private EditText nameText, quantityText, unitPriceText;
     private Spinner locationSpinner;
     private Long rowId;
     private ItemDao itemDao;
     private Item currItem;
-
+    
     /** Called when the activity is first created. */
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -46,8 +54,21 @@ public class ItemEdit extends Activity {
 					     android.R.layout.simple_spinner_item );
 	adapter.setDropDownViewResource( android.R.layout.simple_spinner_dropdown_item);
 	locationSpinner.setAdapter( adapter );
-    }
+	
+	View.OnClickListener radioListener = new View.OnClickListener() {
+		public void onClick( View v ) {
+		    String selected = ((RadioButton)v).getText().toString();
+		    currItem.setPriority( Integer.parseInt( selected ) );
+		}
+	    };
 
+	for ( int i = 0 ; i < RadioButtonIds.length; i++ ) {
+	    RadioButton radio = ( RadioButton ) 
+		findViewById( RadioButtonIds[i] );
+	    radio.setOnClickListener( radioListener );
+	}
+    }
+    
     private String[] getAllLocations( ) {
 	return getResources().getStringArray( R.array.locations );
     }
@@ -90,6 +111,15 @@ public class ItemEdit extends Activity {
 	    item.setLocation( getFirstChoiceOfLocation( ) );
 	} else {
 	    setSpinnerSelected( item.getLocation() );
+	}
+	for ( int i = 0 ; i < RadioButtonIds.length; i++ ) {
+	    RadioButton radio = ( RadioButton ) 
+		findViewById( RadioButtonIds[i] );
+	    int value = Integer.parseInt( radio.getText().toString() );
+	    if ( value == item.getPriority() ) {
+		radio.setChecked( true );
+		break;
+	    }
 	}
     }
 

@@ -72,6 +72,53 @@
 	android:prompt="@string/location_prompt"
 	android:layout_weight="1"/>
   </LinearLayout>
+  <LinearLayout 
+      android:orientation="horizontal"
+      android:layout_width="fill_parent"
+      android:layout_height="wrap_content">
+    
+    <TextView 
+	android:layout_width="wrap_content"
+	android:layout_height="wrap_content" 
+	android:text="@string/priority" />
+    <RadioGroup
+	android:id="@+id/priority" 
+	android:layout_width="wrap_content"
+	android:layout_height="wrap_content"
+	android:orientation="horizontal"
+	android:layout_weight="1">
+      <RadioButton
+	  android:id="@+id/priority_1"
+	  android:layout_width="wrap_content"
+	  android:layout_height="wrap_content"
+	  android:text="1"
+	  />
+      <RadioButton
+	  android:id="@+id/priority_2"
+	  android:layout_width="wrap_content"
+	  android:layout_height="wrap_content"
+	  android:text="2"
+	  />
+      <RadioButton
+	  android:id="@+id/priority_3"
+	  android:layout_width="wrap_content"
+	  android:layout_height="wrap_content"
+	  android:text="3"
+	  />
+      <RadioButton
+	  android:id="@+id/priority_4"
+	  android:layout_width="wrap_content"
+	  android:layout_height="wrap_content"
+	  android:text="4"
+	  />
+      <RadioButton
+	  android:id="@+id/priority_5"
+	  android:layout_width="wrap_content"
+	  android:layout_height="wrap_content"
+	  android:text="5"
+	  />
+    </RadioGroup>
+  </LinearLayout>
 <Button 
     android:id="@+id/confirm" 
     android:text="@string/confirm"
