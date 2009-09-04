@@ -58,4 +58,9 @@
          targets are used.
     -->
     <setup />
+    <target name="clean">
+      <delete includeemptydirs="true">
+	<fileset dir="bin" includes="**/*"/>
+      </delete>
+    </target>
 </project>
