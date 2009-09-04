@@ -1,5 +1,6 @@
 package org.longhorn.android.ikeacart;
 
+import java.text.DecimalFormat;
 public class Item {
 
     private String name;
@@ -21,7 +22,15 @@ public class Item {
 	this.priority = priority;
     }
 
+    public String getFormattedUnitPrice( ) {
+
+	return new DecimalFormat( "0.00" ).format( unitPrice );
+    }
     
+    public static final String formatPrice( double value ) {
+
+	return new DecimalFormat( "$0.00" ).format( value );
+    }
     public void setUnitPrice(double UnitPrice) {
     this.unitPrice = UnitPrice;
     }
@@ -29,6 +38,7 @@ public class Item {
     public double getUnitPrice() {
     return unitPrice;
     }
+    
     
     public void setId(Long Id) {
     this.id = Id;

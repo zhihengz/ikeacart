@@ -15,7 +15,7 @@ public class RowViewBinder implements ViewBinder {
 	int colPriority = cursor.getColumnIndex( ItemDao.KEY_PRIORITY );
 	if ( colUnitPrice == col ) {
 	    TextView unitPriceTextView = (TextView)view;
-	    unitPriceTextView.setText( "$" + cursor.getFloat( col ) );
+	    unitPriceTextView.setText( Item.formatPrice( cursor.getFloat( col ) ) );
 	    return true;
 	} else if ( colQuantity == col ) {
 	    TextView quantityTextView = (TextView)view;

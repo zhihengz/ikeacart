@@ -106,7 +106,7 @@ public class ItemEdit extends Activity {
 	currItem = item;
 	nameText.setText( item.getName( ) );
 	quantityText.setText( "" + item.getQuantity( ) );
-	unitPriceText.setText( "" + item.getUnitPrice( ) );
+	unitPriceText.setText( item.getFormattedUnitPrice( ) );
 	if ( item.getLocation() == null ) {
 	    item.setLocation( getFirstChoiceOfLocation( ) );
 	} else {
