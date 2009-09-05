@@ -1,16 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <TableLayout 
     xmlns:android="http://schemas.android.com/apk/res/android" 
-    android:stretchColumns="*"
+    android:stretchColumns="0"
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
     >
   <TableRow>
     <TextView 
 	android:id="@+id/name"
-	android:gravity="center_horizontal"	    
-	android:layout_width="fill_parent" 
-	android:layout_height="wrap_content" 
+	android:gravity="left|center_vertical"	    
 	android:textStyle="bold"
 	android:textColor="#ffffff"
 	android:layout_column="0"
@@ -19,19 +17,14 @@
       <TextView 
 	  android:id="@+id/unitprice"
 	  android:gravity="right|center_vertical"	    
-	  android:layout_height="fill_parent" 
-	  android:layout_width="wrap_content" 
 	  android:textColor="#ffff00"
 	  android:textSize="12sp"
 	  android:textStyle="bold"
 	  android:layout_column="3"
-	  android:layout_span="1"
 	/>
       <TextView 
 	  android:id="@+id/quantity"
 	  android:gravity="right|center_vertical"
-	  android:layout_height="fill_parent" 
-	  android:layout_width="wrap_content" 
 	  android:textSize="12sp"
 	  android:layout_column="4"
 	  />
@@ -40,8 +33,6 @@
     <TextView 
 	android:id="@+id/location"
 	android:gravity="left"	    
-	android:layout_width="wrap_content" 
-	android:layout_height="fill_parent" 
 	android:layout_column="0"
 	android:layout_span="3"
 	android:padding="5px"
@@ -49,9 +40,6 @@
     <TextView 
 	android:id="@+id/priority"
 	android:gravity="right"	    
-	android:layout_height="fill_parent" 
-	android:layout_width="wrap_content" 
-	android:text="world"
 	android:layout_column="3"
 	android:layout_span="2"
 	/>

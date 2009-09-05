@@ -1,8 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
   <string-array name="locations">
-    <item>Home Improvement</item>
-    <item>Texile</item>
+    <item>Textiles</item>
     <item>Kitchen</item>
+    <item>Children</item>
+    <item>Living room</item>
+    <item>Bedroom</item>
+    <item>Dining</item>
+    <item>Workspace</item>
+    <item>Hallway</item>
+    <item>Bathroom</item>
+    <item>Storage</item>
+    <item>Laundry</item>
+    <item>Decoration</item>
+    <item>Lighting</item>
+    <item>Cooking</item>
+    <item>Eating</item>
   </string-array>
 </resources>
