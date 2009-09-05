@@ -19,7 +19,7 @@ public class RowViewBinder implements ViewBinder {
 	    return true;
 	} else if ( colQuantity == col ) {
 	    TextView quantityTextView = (TextView)view;
-	    quantityTextView.setText( "(" + cursor.getInt( col ) + ")");
+	    quantityTextView.setText( " (" + cursor.getInt( col ) + ")");
 	    return true;
 	} else if ( colPriority == col ) {
 	    TextView priorityTextView = (TextView)view;
