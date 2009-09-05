@@ -112,7 +112,7 @@ public class IkeaCart extends ListActivity {
 	    R.id.priority
 	};
 	SimpleCursorAdapter items =
-	    new SimpleCursorAdapter( this, R.layout.items_row, c,
+	    new SimpleCursorAdapter( this, R.layout.item_table_row, c,
 				     from, to );
 	items.setViewBinder( new RowViewBinder() );
 	setListAdapter( items );
