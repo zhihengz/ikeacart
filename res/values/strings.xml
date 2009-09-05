@@ -11,4 +11,5 @@
     <string name="confirm">Confirm</string>
     <string name="menu_delete">Delete</string>
     <string name="priority">Priority</string>
+    <string name="summary">Summary</string>
 </resources>

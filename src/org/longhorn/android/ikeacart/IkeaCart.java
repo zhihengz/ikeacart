@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.AdapterView.AdapterContextMenuInfo;
 
 public class IkeaCart extends ListActivity {
@@ -94,7 +95,35 @@ public class IkeaCart extends ListActivity {
 	super.onActivityResult( req, res, intent );
 	fillData( );
     }
-    private void fillData() {
+
+    private void fillData( ) {
+	fillSummary();
+	fillListView();
+    }
+
+    private void fillSummary() {
+	CartService cartService = new CartService( itemDao );
+
+	TextView miscText = ( TextView ) findViewById( R.id.misc_summary );
+	TextView costText= ( TextView ) findViewById( R.id.cost_summary );
+	String miscInfo = "";
+	int totalItems = cartService.getTotalItems();
+	if ( totalItems > 0 ) {
+	    miscInfo = totalItems + " item";
+	    if ( totalItems > 1 )
+		miscInfo += "s";
+	}
+
+	miscText.setText( miscInfo );
+
+	double totalCost = cartService.getTotalCost();
+	if ( totalCost > 0 ) {
+	    costText.setText( Item.formatPrice( totalCost ) );
+	} else {
+	    costText.setText( "" );
+	}
+    }
+    private void fillListView() {
 	Cursor c = itemDao.getCursorOfAllItems();
 	startManagingCursor( c );
 	String[] from = new String[] { 
