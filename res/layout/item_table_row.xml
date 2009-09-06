@@ -32,7 +32,7 @@
   <TableRow>
     <TextView 
 	android:id="@+id/location"
-	android:gravity="left"	    
+	android:gravity="left|center_vertical"	    
 	android:layout_column="0"
 	android:layout_span="3"
 	android:padding="5px"
@@ -43,6 +43,14 @@
 	android:layout_column="3"
 	android:layout_span="2"
 	/>
+    <!--
+    <ImageView 
+	android:id="@+id/priority" 
+	android:layout_column="3"
+	android:layout_span="2"
+	android:layout_centerVertical="true"
+	/>
+    -->
   </TableRow>
 </TableLayout>
 
