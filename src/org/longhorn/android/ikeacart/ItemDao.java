@@ -18,6 +18,24 @@ public class ItemDao {
 	KEY_UNITPRICE = "unitprice",
 	KEY_QUANTITY = "quantity";
 
+    private static final String[] ALL_KEYS = {
+	KEY_ROWID, 
+	KEY_NAME,
+	KEY_LOCATION,
+	KEY_UNITPRICE,
+	KEY_QUANTITY,
+	KEY_PRIORITY
+    };    
+    private static final String[] ALL_KEYS_W_PRICE = {
+	KEY_ROWID, 
+	KEY_NAME,
+	KEY_LOCATION,
+	KEY_UNITPRICE,
+	KEY_QUANTITY,
+	KEY_PRIORITY,
+	KEY_UNITPRICE + " * " + KEY_QUANTITY + " as price", 
+    };
+
     private static final String TAG = "ItemDao";
     private DatabaseHelper dbHelper;
     private SQLiteDatabase sqlite;
@@ -131,17 +149,31 @@ public class ItemDao {
      */
     public Cursor getCursorOfAllItems() {
 
-        return sqlite.query( DATABASE_TABLE, 
-			     new String[] {KEY_ROWID, 
-					   KEY_NAME,
-					   KEY_LOCATION,
-					   KEY_UNITPRICE,
-					   KEY_QUANTITY,
-					   KEY_PRIORITY
-			     },
+        return sqlite.query( DATABASE_TABLE, ALL_KEYS,
 			     null, null, null, null, null);
     }
     
+    /**
+     * Return a Cursor over the list of all items in the database by priority
+     * 
+     * @return Cursor over all notes
+     */
+    public Cursor getCursorOfAllItemsByPriority( ) {
+	return sqlite.query( DATABASE_TABLE, ALL_KEYS,
+			     null, null, null, null,
+			     KEY_PRIORITY + " desc" + ", " + 
+			     KEY_NAME );
+    }
+    /**
+     * Return a Cursor over the list of all items in the database by price
+     * 
+     * @return Cursor over all notes
+     */
+    public Cursor getCursorOfAllItemsByPrice( ) {
+	return sqlite.query( DATABASE_TABLE, ALL_KEYS_W_PRICE,
+			     null, null, null, null,
+			     "price desc" + ", " + KEY_NAME );
+    }
     /**
      * Return a Cursor positioned at the item that matches the given rowId
      * 
@@ -153,15 +185,7 @@ public class ItemDao {
 
         Cursor mCursor =
                 sqlite.query( true, 
-			      DATABASE_TABLE, 
-			      new String[] {
-				  KEY_ROWID, 
-				  KEY_NAME,
-				  KEY_LOCATION,
-				  KEY_UNITPRICE,
-				  KEY_QUANTITY,
-				  KEY_PRIORITY
-			      },
+			      DATABASE_TABLE, ALL_KEYS,
 			      KEY_ROWID + "=" + rowId, 
 			      null, null, null, null, null);
         if (mCursor != null) {

@@ -1,6 +1,6 @@
 package org.longhorn.android.ikeacart;
 
-import android.app.ListActivity;
+import android.app.TabActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -12,9 +12,11 @@ import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.TabHost;
+import android.widget.AdapterView;
 import android.widget.AdapterView.AdapterContextMenuInfo;
 
-public class IkeaCart extends ListActivity {
+public class IkeaCart extends TabActivity {
     
     public static final int INSERT_ID = Menu.FIRST;
     public static final int DELETE_ID = Menu.FIRST + 1;
@@ -23,20 +25,58 @@ public class IkeaCart extends ListActivity {
 	ACTIVITY_CREATE = 0,
 	ACTIVITY_EDIT = 1;
 
+    private static final String[][] TABS = {
+	{"tab_default", "sort by" },
+	{"tab_priority", "priority" },
+	{"tab_price", "price" }
+    };
     private int itemIndex = 1;
     private ItemDao itemDao;
+    private int sortOrder = 0;
 
     /** Called when the activity is first created. */
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-	setContentView( R.layout.item_list );
+	setContentView( R.layout.item_list_tab );
 	itemDao = new ItemDao( this );
 	itemDao.open();
+	initTab( );
 	fillData();
 	registerForContextMenu( getListView() );
     }
 
+    private void initTab( ) {
+	TabHost tabHost = getTabHost();
+	for ( int i = 0; i < TABS.length; i++ ) {
+	    
+	    tabHost.addTab( tabHost.newTabSpec( TABS[i][0] )
+			    .setIndicator( TABS[i][1])
+			    .setContent( R.id.main_table ) );
+	}
+	tabHost.setCurrentTab( 1 );
+	tabHost.setCurrentTab( 0 );
+	tabHost.setOnTabChangedListener( new TabHost.OnTabChangeListener() {
+		public void onTabChanged( String tabId ) {
+		    onSortTabChanged( tabId );
+		}
+	    } );
+    }
+
+    private void onSortTabChanged( String tabId ) {
+	
+	if ( TABS[1][0].equals( tabId ) ) {
+	    sortOrder = 1;
+	} else if ( TABS[2][0].equals( tabId ) ) {
+	    sortOrder = 2;
+	} else {
+	    sortOrder = 0;
+	}
+	fillData();
+    }
+    private ListView getListView() {
+	return (ListView) findViewById( android.R.id.list );
+    }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         boolean result = super.onCreateOptionsMenu(menu);
@@ -80,7 +120,7 @@ public class IkeaCart extends ListActivity {
 	return super.onContextItemSelected(item);
 	
     }
-
+    /**
     @Override
     protected void onListItemClick( ListView l, View v, int pos, long id ) {
 	super.onListItemClick( l, v, pos, id );
@@ -88,7 +128,7 @@ public class IkeaCart extends ListActivity {
 	intent.putExtra( ItemDao.KEY_ROWID, id );
 	startActivityForResult( intent, ACTIVITY_EDIT );
     }
-
+    **/
     @Override
     protected void onActivityResult( int req, int res, Intent intent ) {
 
@@ -106,13 +146,13 @@ public class IkeaCart extends ListActivity {
 
 	TextView miscText = ( TextView ) findViewById( R.id.misc_summary );
 	TextView costText= ( TextView ) findViewById( R.id.cost_summary );
-	String miscInfo = "";
+	String miscInfo = "No item yet";
 	int totalItems = cartService.getTotalItems();
 	if ( totalItems > 0 ) {
 	    miscInfo = totalItems + " item";
 	    if ( totalItems > 1 )
 		miscInfo += "s";
-	}
+	} 
 
 	miscText.setText( miscInfo );
 
@@ -124,7 +164,16 @@ public class IkeaCart extends ListActivity {
 	}
     }
     private void fillListView() {
-	Cursor c = itemDao.getCursorOfAllItems();
+	
+	Cursor c = null;
+
+	if ( sortOrder == 1 ) { 
+	    c = itemDao.getCursorOfAllItemsByPriority();
+	} else if ( sortOrder == 2 ) { 
+	    c = itemDao.getCursorOfAllItemsByPrice();
+	} else {
+	    c = itemDao.getCursorOfAllItems();
+	}
 	startManagingCursor( c );
 	String[] from = new String[] { 
 	    itemDao.KEY_NAME,
@@ -144,6 +193,17 @@ public class IkeaCart extends ListActivity {
 	    new SimpleCursorAdapter( this, R.layout.item_table_row, c,
 				     from, to );
 	items.setViewBinder( new RowViewBinder() );
-	setListAdapter( items );
+	ListView list = getListView();
+	list.setAdapter( items );
+	list.setOnItemClickListener( new AdapterView.OnItemClickListener() {
+		public void onItemClick( AdapterView<?>parent,
+					 View view,
+					 int position,
+					 long id ) {
+		    Intent intent = new Intent( IkeaCart.this, ItemEdit.class );
+		    intent.putExtra( ItemDao.KEY_ROWID, id );
+		    startActivityForResult( intent, ACTIVITY_EDIT );
+		}
+	    } );
     }
 }
