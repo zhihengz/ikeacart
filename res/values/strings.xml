@@ -3,6 +3,7 @@
     <string name="app_name">IkeaCart</string>
     <string name="no_items">No Items Yet</string>
     <string name="menu_insert">Add Item</string>
+    <string name="menu_pref">Setting</string>
     <string name="name">Item Name</string>
     <string name="quantity">Quantity</string>
     <string name="unitprice">Unit Price</string>
@@ -12,4 +13,5 @@
     <string name="menu_delete">Delete</string>
     <string name="priority">Priority</string>
     <string name="summary">Summary</string>
+    <string name="tax">Tax Rate</string>
 </resources>

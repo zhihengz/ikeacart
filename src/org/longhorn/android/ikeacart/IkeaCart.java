@@ -20,8 +20,10 @@ public class IkeaCart extends TabActivity {
     
     public static final int INSERT_ID = Menu.FIRST;
     public static final int DELETE_ID = Menu.FIRST + 1;
+    public static final int PREF_ID = Menu.FIRST + 2;
 
     private static final int
+	ACTIVITY_PREF = 2,
 	ACTIVITY_CREATE = 0,
 	ACTIVITY_EDIT = 1;
 
@@ -32,20 +34,26 @@ public class IkeaCart extends TabActivity {
     };
     private int itemIndex = 1;
     private ItemDao itemDao;
+    private PreferenceDao prefDao;
     private int sortOrder = 0;
-
+    
     /** Called when the activity is first created. */
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 	setContentView( R.layout.item_list_tab );
-	itemDao = new ItemDao( this );
-	itemDao.open();
+	initDao();
 	initTab( );
 	fillData();
 	registerForContextMenu( getListView() );
     }
-
+    
+    private void initDao() {
+	itemDao = new ItemDao( this );
+	itemDao.open();
+	prefDao = new PreferenceDao( this );
+	prefDao.open();
+    }
     private void initTab( ) {
 	TabHost tabHost = getTabHost();
 	for ( int i = 0; i < TABS.length; i++ ) {
@@ -80,7 +88,8 @@ public class IkeaCart extends TabActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         boolean result = super.onCreateOptionsMenu(menu);
-	menu.add( 0, INSERT_ID, 0, R.string.menu_insert );
+	menu.add( Menu.NONE, INSERT_ID, 0, R.string.menu_insert );
+	menu.add( Menu.NONE, PREF_ID, 1, R.string.menu_pref );
 	return result;
     }
 
@@ -90,6 +99,9 @@ public class IkeaCart extends TabActivity {
 	case INSERT_ID:
 	    createItem();
 	    return true;
+	case PREF_ID:
+	    changeSetting();
+	    return true;
 	}
 	return super.onOptionsItemSelected(item);
     }
@@ -98,6 +110,11 @@ public class IkeaCart extends TabActivity {
 
 	Intent intent = new Intent( this, ItemEdit.class );
 	startActivityForResult( intent, ACTIVITY_CREATE );
+    }
+
+    private void changeSetting() {
+	Intent intent = new Intent( this, PreferenceEdit.class );
+	startActivityForResult( intent, ACTIVITY_PREF );
     }
 
     @Override
@@ -142,7 +159,8 @@ public class IkeaCart extends TabActivity {
     }
 
     private void fillSummary() {
-	CartService cartService = new CartService( itemDao );
+	CartService cartService = new CartService( itemDao, 
+						   prefDao.getPreference() );
 
 	TextView miscText = ( TextView ) findViewById( R.id.misc_summary );
 	TextView costText= ( TextView ) findViewById( R.id.cost_summary );

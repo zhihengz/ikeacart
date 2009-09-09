@@ -7,18 +7,18 @@ public class CartService {
     private int totalItems;
     private double totalCost;
 
-    public CartService( ItemDao itemDao ) {
+    public CartService( ItemDao itemDao, Preference pref ) {
 	
 	Cursor cursor = itemDao.getCursorOfAllItems();
 	totalItems = cursor.getCount();
 	totalCost = 0;
 	if ( totalItems > 0 ) {
-	    calcCost( cursor );
+	    calcCost( cursor, pref );
 	}
 	cursor.close();
     }
 
-    private void calcCost( Cursor cursor ) {
+    private void calcCost( Cursor cursor, Preference pref ) {
 	if ( cursor.getCount() <= 0 )  {
 	    return;
 	}
@@ -28,6 +28,7 @@ public class CartService {
 		* 
 		cursor.getInt( cursor.getColumnIndexOrThrow( ItemDao.KEY_QUANTITY ) );
 	} ;
+	totalCost = totalCost * ( 1 + pref.getTaxPercent() / 100.0 );
     }
     public int getTotalItems(){
 	return totalItems;

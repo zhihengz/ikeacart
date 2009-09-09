@@ -53,7 +53,7 @@ public class ItemDao {
     private static final String DATABASE_DROP = 
 	"DROP TABLE IF EXISTS " + DATABASE_TABLE;
 
-    private static final int DATABASE_VERSION = 1;
+    private static final int DATABASE_VERSION = 2;
 
     private final Context mCtx;
 
@@ -73,8 +73,8 @@ public class ItemDao {
 	public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
             Log.w(TAG, "Upgrading database from version " + oldVersion + 
 		  " to " + newVersion + ", which will destroy all old data");
-            db.execSQL( DATABASE_DROP );
-            onCreate(db);
+	    db.execSQL( DATABASE_DROP );
+	    onCreate(db);
         }
     }
 
