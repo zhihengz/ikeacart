@@ -21,6 +21,7 @@ public class ItemEdit extends Activity {
 	R.id.priority_5,
     };
     private EditText nameText, quantityText, unitPriceText;
+    private EditText aisleText, binText;
     private Spinner locationSpinner;
     private Long rowId;
     private ItemDao itemDao;
@@ -47,6 +48,8 @@ public class ItemEdit extends Activity {
 	nameText = (EditText) findViewById( R.id.name );
 	quantityText = (EditText) findViewById( R.id.quantity );
 	unitPriceText = (EditText) findViewById( R.id.unitprice );
+	aisleText = (EditText) findViewById( R.id.aisle );
+	binText = (EditText) findViewById( R.id.bin );
 	locationSpinner = (Spinner ) findViewById( R.id.location );
 	ArrayAdapter adapter = 
 	    ArrayAdapter.createFromResource( this,
@@ -110,7 +113,7 @@ public class ItemEdit extends Activity {
 	if ( item.getLocation() == null ) {
 	    item.setLocation( getFirstChoiceOfLocation( ) );
 	} else {
-	    setSpinnerSelected( item.getLocation() );
+	    setLocation( item.getLocation( ) );
 	}
 	for ( int i = 0 ; i < RadioButtonIds.length; i++ ) {
 	    RadioButton radio = ( RadioButton ) 
@@ -123,6 +126,23 @@ public class ItemEdit extends Activity {
 	}
     }
 
+    private void setLocation( String location ) {
+	
+	String aisleBinLoc = getFirstChoiceOfLocation( );
+
+	if ( Item.isLocationAisleAndBin( location ) ) {
+	    setSpinnerSelected( aisleBinLoc );
+	    setAisleAndBin( location );
+	} else {
+	    setSpinnerSelected( location );
+	}
+    }
+
+    private void setAisleAndBin( String location ) {
+	String[] tokens = Item.getAisleAndBinLocation( location );
+	aisleText.setText( tokens[0] );
+	binText.setText( tokens[1] );
+    }
     private String getFirstChoiceOfLocation( ) {
 	return getAllLocations()[0];
     }
@@ -167,7 +187,7 @@ public class ItemEdit extends Activity {
 	item.setName( nameText.getText().toString() );
 	item.setQuantity( Integer.parseInt( quantityText.getText().toString() ) );
 	item.setUnitPrice(Float.parseFloat( unitPriceText.getText().toString() ) );
-	item.setLocation( locationSpinner.getSelectedItem().toString() );
+	item.setLocation( formatLocation() );
 	if ( rowId == null ) {
 	    Item savedItem = itemDao.createItem( item );
 	    if ( savedItem.getId() != null )
@@ -178,6 +198,28 @@ public class ItemEdit extends Activity {
 	}
     }
 
+    private String formatLocation( ) {
+	
+	if ( isValidInputOfAisleAndBin() ) {
+
+	    String aisle = aisleText.getText().toString();
+	    String bin = binText.getText().toString();
+	    return aisle + ":" + bin;
+
+	} else {
+	    return locationSpinner.getSelectedItem().toString();
+	}
+    }
+
+    private boolean isValidInputOfAisleAndBin( ) {
+	return isNotEmptyInput( aisleText ) && 
+	    isNotEmptyInput( binText );
+    }
+
+    private boolean isNotEmptyInput( EditText textInput ) {
+	String input = textInput.getText().toString();
+	return input != null && ! "".equals( input.trim() );
+    }
     @Override
     protected void onResume() {
 	super.onResume( );

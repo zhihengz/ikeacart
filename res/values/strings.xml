@@ -14,4 +14,7 @@
     <string name="priority">Priority</string>
     <string name="summary">Summary</string>
     <string name="tax">Tax Rate</string>
+    <string name="bin">Bin</string>
+    <string name="aisle">Aisle</string>
+    <string name="misc">Misc</string>
 </resources>

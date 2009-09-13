@@ -14,6 +14,7 @@ public class RowViewBinder implements ViewBinder {
 	int colUnitPrice = cursor.getColumnIndex( ItemDao.KEY_UNITPRICE );
 	int colQuantity = cursor.getColumnIndex( ItemDao.KEY_QUANTITY );
 	int colPriority = cursor.getColumnIndex( ItemDao.KEY_PRIORITY );
+	int colLocation = cursor.getColumnIndex( ItemDao.KEY_LOCATION );
 	if ( colUnitPrice == col ) {
 	    TextView unitPriceTextView = (TextView)view;
 	    unitPriceTextView.setText( Item.formatPrice( cursor.getFloat( col ) ) );
@@ -24,6 +25,9 @@ public class RowViewBinder implements ViewBinder {
 	    return true;
 	} else if ( colPriority == col ) {
 	    setupPriorityView( cursor.getInt( col ), view );
+	    return true;
+	} else if ( colLocation == col ) {
+	    setupLocationView( cursor.getString( col ), view );
 	    return true;
 	}
 	
@@ -37,6 +41,20 @@ public class RowViewBinder implements ViewBinder {
 	    buf.append( "* " );
 	}
 	priorityTextView.setText( buf.toString());
+    }
+    private void setupLocationView( String location, View view ) {
+
+	
+	TextView locationTextView = (TextView)view;
+
+	if ( Item.isLocationAisleAndBin( location ) ) {
+	    String[] tokens = 
+		Item.getAisleAndBinLocation( location );
+	    locationTextView.setText( "Aisle: " + tokens[0] + 
+				      "    Bin: " + tokens[1] );
+	} else {
+	    locationTextView.setText( location );
+	}
     }
     /**
     private void setupPriorityView( int priority, View view ) {

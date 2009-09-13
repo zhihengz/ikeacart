@@ -31,6 +31,32 @@ public class Item {
 
 	return new DecimalFormat( "$0.00" ).format( value );
     }
+
+    public static final boolean isLocationAisleAndBin( String input ) {
+
+	String[] tokens = input.split( ":" );
+	if ( tokens.length == 2 ) {
+	    for ( int i = 0; i < tokens.length; i++ ) {
+		try {
+		    Integer.parseInt( tokens[i] );
+		} catch( NumberFormatException e ) {
+		    return false;
+		}
+	    }
+	} else {
+	    return false;
+	}
+	return true;
+    }
+
+    public static final String formatAisleAndBinLocation( String aisle,
+							  String bin ) {
+	return aisle + ":" + bin;
+    }
+
+    public static final String[] getAisleAndBinLocation( String input ) {
+	return input.split( ":" );
+    }
     public void setUnitPrice(double UnitPrice) {
     this.unitPrice = UnitPrice;
     }

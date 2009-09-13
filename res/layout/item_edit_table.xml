@@ -15,8 +15,8 @@
 	android:id="@+id/name" 
 	android:layout_height="wrap_content" 
 	android:singleLine="true"
-	android:layout_column="2"
-	android:layout_span="5"
+	android:layout_column="1"
+	android:layout_span="3"
 	/>
   </TableRow>
   <TableRow>
@@ -31,13 +31,13 @@
 	android:numeric="integer"
 	android:singleLine="true"
 	android:layout_height="wrap_content" 
-	android:layout_column="2"
+	android:layout_column="1"
 	/>
     <TextView 
-	android:layout_width="wrap_content"
 	android:layout_height="wrap_content" 
-	android:text="@string/unitprice" 
-	android:layout_column="4"
+	android:text="@string/unitprice"
+	android:gravity="center"
+	android:layout_column="2"
 	/>
     <EditText 
 	android:id="@+id/unitprice" 
@@ -45,9 +45,8 @@
 	android:numeric="decimal"
 	android:layout_height="wrap_content" 
 	android:singleLine="true"
-	android:layout_column="6"
+	android:layout_column="3"
 	/>
-    
   </TableRow>
   <TableRow>
     <TextView 
@@ -61,8 +60,38 @@
 	android:layout_height="wrap_content" 
 	android:drawSelectorOnTop="true"
 	android:prompt="@string/location_prompt"
+	android:layout_column="1"
+	android:layout_span="3"
+	/>
+  </TableRow>
+  <TableRow>
+    <TextView 
+	android:layout_height="wrap_content" 
+	android:text="@string/aisle" 
+	android:layout_column="0"
+	/>
+    <EditText 
+	android:id="@+id/aisle" 
+	android:maxLength="3"
+	android:numeric="integer"
+	android:singleLine="true"
+	android:layout_height="wrap_content" 
+	android:layout_column="1"
+	/>
+    <TextView 
+	android:layout_width="wrap_content"
+	android:layout_height="wrap_content" 
+	android:text="@string/bin" 
+	android:gravity="center"
 	android:layout_column="2"
-	android:layout_span="5"
+	/>
+    <EditText 
+	android:id="@+id/bin" 
+	android:maxLength="3"
+	android:numeric="integer"
+	android:layout_height="wrap_content" 
+	android:singleLine="true"
+	android:layout_column="3"
 	/>
   </TableRow>
   <TableRow>
@@ -75,7 +104,7 @@
     <RadioGroup
 	android:id="@+id/priority" 
 	android:layout_column="1"
-	android:layout_span="6"
+	android:layout_span="3"
 	android:layout_width="wrap_content"
 	android:layout_height="wrap_content"
 	android:orientation="horizontal"
